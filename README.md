@@ -263,7 +263,7 @@ gave SCOTS enough possible commands to find a working controller.
 
 ---
 
-# 7. Shared Go2 Model
+# Shared Go2 Model
 
 Common Go2 code was moved into:
 
