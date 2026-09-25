@@ -17,6 +17,7 @@
 #include <exception>
 #include <algorithm>
 #include <climits>
+#include <limits>
 #include <memory>
 
 /** @namespace scots **/ 

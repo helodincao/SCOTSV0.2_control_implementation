@@ -15,6 +15,7 @@
 #include <string>
 #include <vector>
 #include <climits>
+#include <limits>
 #include <iomanip>
 
 #ifdef SCOTS_BDD
