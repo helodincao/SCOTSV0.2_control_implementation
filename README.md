@@ -53,7 +53,7 @@ SCOTSV0.2_control_implementation/
 
 ---
 
-# 1. Docker Setup
+# Docker Setup
 
 Docker is used so the project can run in the same environment on different computers.
 
@@ -100,7 +100,7 @@ Changes made inside that folder are also saved on the computer.
 
 ---
 
-# 2. Starting from the SCOTS Vehicle Example
+# Starting from the SCOTS Vehicle Example
 
 The SCOTS v0.2 vehicle example was used as the starting point for the new Go2 controller.
 
@@ -116,7 +116,7 @@ The original example successfully produced a winning controller, which confirmed
 
 ---
 
-# 3. Go2 Motion Model
+# Go2 Motion Model
 
 The example vehicle dynamics were replaced with the Go2 motion model.
 
@@ -168,7 +168,7 @@ The controller output should therefore be sent directly to the robot without rot
 
 ---
 
-# 4. RK4 Integration
+# RK4 Integration
 
 SCOTS needs to predict how the robot moves after a command is applied.
 
@@ -195,7 +195,7 @@ Each smaller step is:
 
 ---
 
-# 5. State Grid
+# State Grid
 
 The current real test arena uses:
 
@@ -223,7 +223,7 @@ SCOTS checks these possible states when building the controller.
 
 ---
 
-# 6. Input Grid
+# Input Grid
 
 The current robot command limits are:
 
@@ -287,7 +287,7 @@ Both synthesis and simulation now use the same model.
 
 ---
 
-# 8. Arena Configuration File
+# Arena Configuration File
 
 Instead of hardcoding the arena inside the C++ program, most settings are stored in:
 
@@ -320,7 +320,7 @@ This means the arena can be changed without rewriting the controller source code
 
 ---
 
-# 9. Obstacles
+# Obstacles
 
 The current arena contains three rectangular obstacles.
 
@@ -332,7 +332,7 @@ The three obstacles create a slalom-like path through the arena.
 
 ---
 
-# 10. Target
+# Target
 
 The target is represented as an ellipse around:
 
@@ -353,7 +353,7 @@ It does not need to finish at one exact heading.
 
 ---
 
-# 11. Controller Synthesis
+# Controller Synthesis
 
 The C++ synthesis program:
 
@@ -388,7 +388,7 @@ target.scs
 
 ---
 
-# 12. C++ Simulation
+# C++ Simulation
 
 A separate C++ simulator was created:
 
@@ -418,7 +418,7 @@ This was the first confirmation that the generated controller worked.
 
 ---
 
-# 13. Python Binding for SCOTS
+# Python Binding for SCOTS
 
 The existing Go2 deployment code is mostly Python.
 
@@ -458,7 +458,7 @@ This is useful for deployment because if the robot leaves the winning set, it re
 
 ---
 
-# 14. Deployment Docker Container
+# Deployment Docker Container
 
 A second Docker image was created for Python deployment testing.
 
@@ -485,7 +485,7 @@ docker run --rm -it \
 
 ---
 
-# 15. Testing the Python Binding
+# Testing the Python Binding
 
 A small test was created:
 
@@ -517,7 +517,7 @@ receive a Go2 command
 
 ---
 
-# 16. Full Python Simulation
+# Full Python Simulation
 
 A second test was created:
 
@@ -547,7 +547,7 @@ This confirmed that the Python/C++ connection was behaving correctly.
 
 ---
 
-# 17. Hardware-Independent Deployment Structure
+# Hardware-Independent Deployment Structure
 
 The next step was to separate the control loop from the hardware.
 
@@ -577,7 +577,7 @@ The controller loop does not need to know whether it is running a simulation or 
 
 ---
 
-# 18. PoseSource
+# PoseSource
 
 The base class is in:
 
@@ -621,7 +621,7 @@ This lets the simulated robot move when it receives a controller command.
 
 ---
 
-# 19. CommandSink
+# CommandSink
 
 The base class is in:
 
@@ -658,7 +658,7 @@ Later, a real robot sink will use the exact same interface.
 
 ---
 
-# 20. Deployment Loop
+# Deployment Loop
 
 The main control loop is:
 
@@ -696,7 +696,7 @@ OptiTrackPoseSource + SportClientSink
 
 ---
 
-# 21. Deployment Safety Behavior
+# Deployment Safety Behavior
 
 The deployment loop includes an important safety rule.
 
@@ -729,7 +729,7 @@ That includes:
 
 ---
 
-# 22. Full Deployment Dry Run
+# Full Deployment Dry Run
 
 The new deployment structure was tested inside the deployment Docker container.
 
@@ -928,5 +928,3 @@ Current progress:
 
 [ ] Real Go2 test
 ```
-
-The important result so far is that the complete controller path has been tested without hardware and produces the same behavior at every stage.
