@@ -44,12 +44,18 @@ auto radius_post = [](state_type &r, const state_type &, const input_type &u) ->
 };
 
 
-int main() {
+int main(int argc, char **argv){
+
+  std::string config_file = "arena_config.txt";
+
+  if (argc > 1) {
+      config_file = argv[1];
+  }
 
   ArenaConfig cfg;
 
-  if (!readArenaConfig("arena_config.txt", cfg)) {
-    std::cout << "Could not read arena_config.txt" << std::endl;
+  if (!readArenaConfig(config_file, cfg)) {
+    std::cout << "Could not read " << config_file << std::endl;
     return 1;
   }
   else{
@@ -165,9 +171,21 @@ int main() {
   tt.toc();
   std::cout << "Winning domain size: " << win.get_size() << std::endl;
 
-  std::cout << "\nWrite controller to controller.scs \n";
-  if(write_to_file(scots::StaticController(ss,is,std::move(win)),"controller"))
-    std::cout << "Done. \n";
+  std::string controller_name = "controller";
 
-  return 1;
+  if (config_file == "start_config.txt") {
+    controller_name = "start_controller";
+  }
+
+  std::cout << "\nWrite controller to "
+            << controller_name
+            << ".scs \n";
+
+  if (write_to_file(
+        scots::StaticController(ss, is, std::move(win)),
+        controller_name)) {
+    std::cout << "Done. \n";
+  }
+
+  return 0;
 }

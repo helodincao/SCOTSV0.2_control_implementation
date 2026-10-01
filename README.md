@@ -13,46 +13,6 @@ The main goal is to:
 
 The project is designed so that the same controller logic can be tested on a Mac using Docker before being used on the real lab hardware.
 
----
-
-# Project Structure
-
-The current structure is:
-
-```text
-SCOTSV0.2_control_implementation/
-│
-├── go2_v02/
-│   ├── synthesis/
-│   │   ├── go2_controller.cc
-│   │   ├── go2_model.hh
-│   │   ├── arena_config.txt
-│   │   ├── Makefile
-│   │   ├── controller.scs
-│   │   └── target.scs
-│   │
-│   ├── sim/
-│   │   ├── simulate.cc
-│   │   └── Makefile
-│   │
-│   ├── deploy/
-│   │   ├── scots_binding.cc
-│   │   ├── test_binding.py
-│   │   ├── sim_python.py
-│   │   ├── pose_source.py
-│   │   ├── command_sink.py
-│   │   └── deploy_loop.py
-│   │
-│   └── docker/
-│       ├── Dockerfile.synth
-│       └── Dockerfile.deploy
-│
-├── src/
-└── utils/
-```
-
----
-
 # Docker Setup
 
 Docker is used so the project can run in the same environment on different computers.

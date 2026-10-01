@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 import math
-
+import requests
+import time
 
 class PoseSource(ABC):
     @abstractmethod
@@ -45,3 +46,46 @@ class SimPoseSource(PoseSource):
             ]
 
         self.state = x
+
+class OptiTrackPoseSource(PoseSource):
+    def __init__(self, url, robot_name):
+        self.url = url
+        self.robot_name = robot_name
+        self.session = requests.Session()
+
+    def get_pose(self):
+        response = self.session.get(self.url)
+        objects = response.json()
+
+        raw = objects[self.robot_name]
+
+        if raw == "untracked":
+            return None
+
+        coordinates = [float(x) for x in raw.split(",")]
+
+        x = coordinates[2]
+        y = -coordinates[1]
+        yaw = coordinates[3]
+
+        return [x, y, yaw]
+
+    def loop(self):
+        while True:
+            pose = self.get_pose()
+
+            if pose is None:
+                print("NOT BEING TRACKED")
+            else:
+                print(pose)
+
+            time.sleep(0.2)
+
+
+if __name__ == "__main__":
+    p = OptiTrackPoseSource(
+        "http://192.168.1.194:12345/OptiTrackRestServer",
+        "GO2-001"
+    )
+
+    p.loop()
